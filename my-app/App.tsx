@@ -4,8 +4,9 @@ import TitleMovie from './fetchMovieTitle';
 
 const styles = StyleSheet.create({
   image: {
-    width: 100,
-    height: 200,
+    height : 200,
+    width : 300,
+    backgroundColor: 'red'
   }
 });
 
@@ -14,13 +15,17 @@ const HelloWorldApp = () => {
 
   TitleMovie((result) => {setImage(result)});
 
-  console.log(image);
-
   return (
-    <View>
+    <View
+      style={{
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}>
       <Image
        style={styles.image}
        source={{uri: image}}
+       resizeMode= 'contain'
       />
     </View>
   );
