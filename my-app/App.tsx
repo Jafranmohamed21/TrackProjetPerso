@@ -1,20 +1,27 @@
 import React, { useState } from 'react';
-import { Text, View } from 'react-native';
+import { Image, StyleSheet, View } from 'react-native';
 import TitleMovie from './fetchMovieTitle';
 
-const HelloWorldApp = () => {
-  const [title, setTitle] = useState('')
+const styles = StyleSheet.create({
+  image: {
+    width: 100,
+    height: 200,
+  }
+});
 
-  TitleMovie((result) => {setTitle(result)});
+const HelloWorldApp = () => {
+  const [image, setImage] = useState('')
+
+  TitleMovie((result) => {setImage(result)});
+
+  console.log(image);
 
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}>
-      <Text>{title}</Text>
+    <View>
+      <Image
+       style={styles.image}
+       source={{uri: image}}
+      />
     </View>
   );
 };
