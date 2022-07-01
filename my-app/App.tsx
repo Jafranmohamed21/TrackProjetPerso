@@ -1,19 +1,36 @@
 import React, { useState } from 'react';
-import { Image, StyleSheet, View } from 'react-native';
-import TitleMovie from './fetchMovieTitle';
+import { Image, StyleSheet, Text, View } from 'react-native';
+import MovieData from './fetchMovieData';
+
+var title = '';
+var image = '';
 
 const styles = StyleSheet.create({
   image: {
-    height : 200,
+    height : 300,
     width : 300,
-    backgroundColor: 'red'
   }
 });
 
 const HelloWorldApp = () => {
-  const [image, setImage] = useState('')
+  const [data, setData] = useState('')
+  MovieData((result) => {setData(result)});
+ 
+  var tab = Object.getOwnPropertyNames(data);
+  var value = Object.values(data);
 
-  TitleMovie((result) => {setImage(result)});
+  for (let i in tab) {
+    if (tab.hasOwnProperty(i)) {
+        if(tab[i] == 'title'){
+          title = value[i];
+        }
+        if(tab[i] == 'image'){
+          image = value[i];
+        }
+    }
+    else {
+    }
+  }
 
   return (
     <View
@@ -27,6 +44,7 @@ const HelloWorldApp = () => {
        source={{uri: image}}
        resizeMode= 'contain'
       />
+      <Text>{title}</Text>
     </View>
   );
 };
