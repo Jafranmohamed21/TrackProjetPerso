@@ -5,7 +5,7 @@ import MovieData from './fetchMovieData';
 var title = new Array();
 var image = new Array();
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create({ //definir la taille de l'image
   image: {
     height : 300,
     width : 300,
@@ -17,14 +17,14 @@ const HelloWorldApp = () => {
   const [data, setData] = useState('')
   MovieData((result) => {setData(result)});
 
-  var value = Object.values(data);
+  var value = Object.values(data); //recupere toutes les donnees des films
   var j = 0;
 
   for (let n in value) {
-    var val = Object.values(value[n]);
-    var tab = Object.getOwnPropertyNames(value[n]);
+    var val = Object.values(value[n]); // recuperer les donnees d'un film a la suite
+    var tab = Object.getOwnPropertyNames(value[n]); //les differentes donnees presentes
     for (let i in tab) {
-      if (tab.hasOwnProperty(i)) {
+      if (tab.hasOwnProperty(i)) { //parcourir les differents donnees d'un film
           if(tab[i] == 'title'){
             title[j] = val[i];
           }
