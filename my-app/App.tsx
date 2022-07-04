@@ -9,6 +9,13 @@ const styles = StyleSheet.create({ //definir la taille de l'image
   image: {
     height : 300,
     width : 300,
+  },
+  scrollView: {    
+    backgroundColor: 'pink',
+    marginHorizontal: 30,
+  },
+  text: {
+    fontSize: 40,
   }
 });
 
@@ -46,6 +53,7 @@ const HelloWorldApp = () => {
         justifyContent: 'center',
         alignItems: 'center',
       }}>
+      <ScrollView style={styles.scrollView}>
       <Image
        style={styles.image}
        source={{uri: image[0]}}
@@ -58,6 +66,13 @@ const HelloWorldApp = () => {
        resizeMode= 'contain'
       />
       <Text>{title[1]}</Text>
+      <Image
+       style={styles.image}
+       source={{uri: image[2]}}
+       resizeMode= 'contain'
+      />
+      <Text>{title[2]}</Text>
+      </ScrollView>
     </View>
   );
 };
