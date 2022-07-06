@@ -1,37 +1,20 @@
 import React, { useState } from 'react';
-import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
-import MovieData from './fetchMovieData';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import getMovieData from './fetchMovieData';
+import getMovieTitle from './getMovieTitle';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { NavigationContainer } from '@react-navigation/native';
 
-var title = new Array();
-var image = new Array();
 
-const HelloWorldApp = () => {
 
+function HomeScreen() {
   const [data, setData] = useState('')
-  MovieData((result) => {setData(result)});
+  getMovieData((result) => {setData(result)});
 
+  
   var value = Object.values(data); //recupere toutes les donnees des films
-  var j = 0;
-
-  for (let n in value) {
-    var val = Object.values(value[n]); // recuperer les donnees d'un film a la suite
-    var tab = Object.getOwnPropertyNames(value[n]); //les differentes donnees presentes
-    for (let i in tab) {
-      if (tab.hasOwnProperty(i)) { //parcourir les differents donnees d'un film
-          if(tab[i] == 'title'){
-            title[j] = val[i] + '\n';
-          }
-          if(tab[i] == 'image'){
-            image[j] = val[i];
-            j++;
-          }
-      }
-      else {
-      }
-    }
-  }
-  //console.log(value[1]);
-
+  var title = getMovieTitle(value);
+  
   return (
     <View
       style={{
@@ -39,16 +22,44 @@ const HelloWorldApp = () => {
         justifyContent: 'center',
         alignItems: 'center',
       }}>
-      <ScrollView style={styles.scrollView}>
-        {title.map((item) => {
-          return (
+      {/*<ScrollView style={styles.scrollView}>
+       {title.map((item) => {
+       return (*/}
             <View>
-            <Text style={styles.item}>{item}</Text>
+            <Text style={styles.item} key="{item}">Castle in the sky</Text>
             </View>
-          )
+        {/*  )
         })}
-      </ScrollView>
+      </ScrollView>*/}
     </View>
+  );
+}
+
+function SettingsScreen() { //Creation d une 2eme page 'favoris'
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>Favoris</Text>
+    </View>
+  );
+}
+
+const Tabs = createBottomTabNavigator(); //Cree la navigation en bas de l'appli
+
+function MyTabs() {
+  return (
+    <Tabs.Navigator>
+      <Tabs.Screen name="Films" component={HomeScreen} />
+      <Tabs.Screen name="Favoris" component={SettingsScreen} />
+    </Tabs.Navigator>
+  );
+}
+
+
+const HelloWorldApp = () => {
+  return (
+    <NavigationContainer>
+      <MyTabs />
+    </NavigationContainer>
   );
 };
 
@@ -67,7 +78,7 @@ const styles = StyleSheet.create({ //definir la taille de l'image
   },
   item: {
     marginTop: 20,
-    padding: 15,
+    padding: 20,
     backgroundColor: 'pink',
     fontSize: 15
   }
