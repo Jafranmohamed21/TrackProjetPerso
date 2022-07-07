@@ -1,9 +1,12 @@
-import { render, screen } from '@testing-library/react';
-import HelloWorldApp from './App';
+import { render, screen } from '@testing-library/react-native';
+// import '@testing-library/jest-dom/extend-expect';
+import HelloWorldApp from './App.tsx';
+
+//jest.mock('./fetchMovieData', () => jest.fn().mockResolvedValue({ mesDonnees: 123, ghibli: 'truc' }))
 
 describe('App component', () => {
- test('it renders', () => {
+ test('render title', () => {
    render(<HelloWorldApp />);
-   expect(screen.getByText('Castle in the sky')).toBeInTheDocument();
+   screen.getByText('Castle in the Sky')
  });
 })
