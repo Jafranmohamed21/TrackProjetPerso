@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, ScrollView, Text, View, ActivityIndicator } from 'react-native';
 import getMovieData from './fetchMovieData';
-import getMovieTitle from './getMovieTitle';
-import { GhibliApi } from './types';
-/*import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer } from '@react-navigation/native';*/
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { NavigationContainer } from '@react-navigation/native';
+
 
 const HelloWorldApp = () => {
   const [title, setTitle] = useState(Array<string>)
@@ -20,23 +19,23 @@ const HelloWorldApp = () => {
 if (!title) {
   return <ActivityIndicator testID='loader'/>
 }
+
   return (
-    <View
-    style={{
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-    }}>
-      <Text>{title[0]}</Text>
-    </View>
-    
+    <ScrollView style={styles.scrollView}>
+      {title.map((item) => {
+       return (
+            <View>
+            <Text style={styles.item} key="{item}">{item}</Text>
+            </View>
+       )})}
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({ //definir la taille de l'image
   container: {
     flex: 1,
-    paddingTop: 40,
+    paddingTop: 10,
     paddingHorizontal: 20,
   },
   image: {
@@ -44,11 +43,11 @@ const styles = StyleSheet.create({ //definir la taille de l'image
     width : 300,
   },
   scrollView: {    
-    marginHorizontal: 30,
+    marginHorizontal: 60,
   },
   item: {
     marginTop: 20,
-    padding: 20,
+    padding: 10,
     backgroundColor: 'pink',
     fontSize: 15
   }
