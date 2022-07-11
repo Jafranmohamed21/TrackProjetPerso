@@ -1,65 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, ScrollView, Text, View } from 'react-native';
+import { StyleSheet, ScrollView, Text, View, ActivityIndicator } from 'react-native';
 import getMovieData from './fetchMovieData';
 import getMovieTitle from './getMovieTitle';
+import { GhibliApi } from './types';
 /*import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';*/
 
-
-
-function HomeScreen() {
- const [data, setData] = useState('')
- // getMovieData(result);
-
+const HelloWorldApp = () => {
+  const [title, setTitle] = useState(Array<string>)
+ 
   useEffect(() => {
     (async () => {
-      const result = await getMovieData();
-      console.log(result);
-      setData(result);
-  })()
-},[]);
-  
-  var value = Object.values(data); //recupere toutes les donnees des films
-  var title = getMovieTitle(value);
-  
-  
-  return (
-    <View
-     >
-      {/*{<ScrollView style={styles.scrollView}>
-       {title.map((item) => {
-       return (
-            <View>*/}
-            <Text>{title[0]}</Text>
-           {/* </View>
-          })
-        })}
-      </ScrollView>}*/}
-    </View>
-  );
-}
-/*
-function SettingsScreen() { //Creation d une 2eme page 'favoris'
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Favoris</Text>
-    </View>
-  );
-}
+      const title = await getMovieData();
+      console.log(title);
+      setTitle(title);
+    })()
+  },[]);
 
-const Tabs = createBottomTabNavigator(); //Cree la navigation en bas de l'appli
-
-function MyTabs() {
-  return (
-    <Tabs.Navigator>
-      <Tabs.Screen name="Films" component={HomeScreen} />
-      <Tabs.Screen name="Favoris" component={SettingsScreen} />
-    </Tabs.Navigator>
-  );
+if (!title) {
+  return <ActivityIndicator testID='loader'/>
 }
-*/
-
-const HelloWorldApp = () => {
   return (
     <View
     style={{
@@ -67,7 +27,7 @@ const HelloWorldApp = () => {
       justifyContent: 'center',
       alignItems: 'center',
     }}>
-      <HomeScreen/>
+      <Text>{title[0]}</Text>
     </View>
     
   );

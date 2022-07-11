@@ -1,14 +1,11 @@
-
-/*const getMovieData = (callback: (arg: any) => void) => {
-    
-    fetch('https://ghibliapi.herokuapp.com/films') //chercher les infos des films du studio Ghibli
-    .then(response => response.json())
-    .then(data => {callback(data)});
-}*/
+import getMovieTitle from "./getMovieTitle";
 
 const getMovieData = () => {
-    return fetch('https://ghibliapi.herokuapp.com/films') //chercher les infos des films du studio Ghibli
+    return fetch('https://ghibliapi.herokuapp.com/films')
      .then(response => response.json())
+     .then(result => {
+        return getMovieTitle(result)
+     })
  }
 
 export default getMovieData;
