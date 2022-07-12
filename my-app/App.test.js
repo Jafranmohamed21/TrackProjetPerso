@@ -3,19 +3,15 @@ import { NavigationContainer } from '@react-navigation/native';
 import HelloWorldApp from './App.tsx';
 
 jest.mock('./fetchMovieData', () => jest.fn().mockResolvedValue(
-  ['Porco Rosso', 'Pom Poko', 'Whisper of the Heart', "Princess Mononoke", 'My Neighbors the Yamadas']))
+  ['Castle in the Sky']))
 
 describe('App component', () => {
  test.only('render title', async () => {
    render(<HelloWorldApp />);
    //await screen.findByTestId('loader')
-   //screen.debug()
-   await waitFor(async () => {
-    await screen.findByText('Porco Rosso');
-    screen.getByText('Pom Poko');
-    screen.getByText('Whisper of the Heart');
-    screen.getByText("Princess Mononoke");
-    screen.getByText('My Neighbors the Yamadas');
+   screen.debug()
+   await waitFor(() => {
+    screen.getByText('Castle in the Sky');
    })
    //screen.debug()
  });

@@ -3,36 +3,40 @@ import { StyleSheet, ScrollView, Text, View, Image, ActivityIndicator } from 're
 import getMovieData from './fetchMovieData';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
-
+import { GhibliApi} from "./types";
 
 const HomeScreen = () => {
-  const [title, setTitle] = useState<Array<string>>([])
+  const [moviesResponse, setData] = useState<GhibliApi>([])
  
   useEffect(() => {
     (async () => {
-      const title = await getMovieData();
-      console.log(title);
-      setTitle(title);
+      const result = await getMovieData();
+      //console.log(result);
+      setData(result);
     })()
   },[]);
 
-if (!title) {
-  return <ActivityIndicator testID='loader'/>
-}
 
   return (
     <ScrollView style={styles.scrollView}>
-      {title.map((item) => {
-       return (
-            <View key={item}>
-            <Text style={styles.item} >{item}</Text>
-            </View>
-       )})}
+      {moviesResponse.map((movie)=> {
+        return (
+          <View>
+          <Text style={styles.title}>{movie.title}</Text>
+          <Text style={styles.desc}>{movie.description}</Text>
+          <Image
+            resizeMode= 'contain'
+            style={styles.image}
+            source={{uri: movie.image}}
+          />
+          </View>      
+        )
+        })}      
     </ScrollView>
   );
 };
 
-function SettingsScreen() { //Creation d une 2eme page 'favoris'
+function FavoriteScreen() { //Creation d une 2eme page 'favoris'
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Text>Favoris</Text>
@@ -46,7 +50,7 @@ function MyTabs() {
   return (
     <Tabs.Navigator>
       <Tabs.Screen name="Films" component={HomeScreen} />
-      <Tabs.Screen name="Favoris" component={SettingsScreen} />
+      <Tabs.Screen name="Favoris" component={FavoriteScreen} />
     </Tabs.Navigator>
   );
 }
@@ -66,16 +70,22 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingHorizontal: 20,
   },
+  scrollView: {
+    marginHorizontal: 20,
+  },
   image: {
-    height : 300,
-    width : 300,
+    height: 300,
+    width: 300,
+    alignSelf: 'center',
+    marginBottom: 50,
   },
-  scrollView: {    
-    marginHorizontal: 60,
-  },
-  item: {
-    marginTop: 20,
+  title: {
+    textAlign: 'center',
     padding: 10,
+    backgroundColor: 'lightskyblue',
+    fontSize: 15
+  },
+  desc: {
     backgroundColor: 'pink',
     fontSize: 15
   }

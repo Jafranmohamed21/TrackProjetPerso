@@ -1,10 +1,9 @@
 type FilmApi = {
     description: string,
     title: string,
-    id: string
+    image: string,
 }
 
 export type GhibliApi = Array<FilmApi>;
 
-
-export type GhibliJafran = Array<string>
+//export type GhibliJafran = Array<string>
