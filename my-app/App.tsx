@@ -16,20 +16,31 @@ const HomeScreen = () => {
     })()
   },[]);
 
+  const starImgCorner = 'https://raw.githubusercontent.com/tranhonghan/images/main/star_corner.png';
+  const starImgFilled = 'https://raw.githubusercontent.com/tranhonghan/images/main/star_filled.png'
 
   return (
     <ScrollView style={styles.scrollView}>
       {moviesResponse.map((movie)=> {
         return (
-          <View>
-          <Text style={styles.title}>{movie.title}</Text>
+          <View >
+            <View style={styles.container}>
+            <Text style={styles.title}>{movie.title}</Text>
+            <Image
+              resizeMode= 'contain'
+              style={styles.icon}
+              source={{uri: starImgCorner}}
+            />
+            </View> 
+          <View>    
           <Text style={styles.desc}>{movie.description}</Text>
           <Image
             resizeMode= 'contain'
             style={styles.image}
             source={{uri: movie.image}}
           />
-          </View>      
+          </View>  
+          </View>
         )
         })}      
     </ScrollView>
@@ -66,26 +77,30 @@ const HelloWorldApp = () => {
 
 const styles = StyleSheet.create({ 
   container: {
-    flex: 1,
-    paddingTop: 10,
-    paddingHorizontal: 20,
+    flex: 1, flexDirection: 'row', alignSelf: 'center'
   },
   scrollView: {
-    marginHorizontal: 20,
+  },
+  icon: {
+    height: 30,
+    width: 30,
+    alignSelf: 'center'
   },
   image: {
     height: 300,
     width: 300,
     alignSelf: 'center',
-    marginBottom: 50,
+    marginBottom: 20,
   },
   title: {
+    marginHorizontal: 10,
     textAlign: 'center',
     padding: 10,
     backgroundColor: 'lightskyblue',
     fontSize: 15
   },
   desc: {
+    marginHorizontal: 20,
     backgroundColor: 'pink',
     fontSize: 15
   }
