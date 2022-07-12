@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, ScrollView, Text, View, ActivityIndicator } from 'react-native';
+import { StyleSheet, ScrollView, Text, View, Image, ActivityIndicator } from 'react-native';
 import getMovieData from './fetchMovieData';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 
 
-const HelloWorldApp = () => {
-  const [title, setTitle] = useState(Array<string>)
+const HomeScreen = () => {
+  const [title, setTitle] = useState<Array<string>>([])
  
   useEffect(() => {
     (async () => {
@@ -24,15 +24,43 @@ if (!title) {
     <ScrollView style={styles.scrollView}>
       {title.map((item) => {
        return (
-            <View>
-            <Text style={styles.item} key="{item}">{item}</Text>
+            <View key={item}>
+            <Text style={styles.item} >{item}</Text>
             </View>
        )})}
     </ScrollView>
   );
 };
 
-const styles = StyleSheet.create({ //definir la taille de l'image
+function SettingsScreen() { //Creation d une 2eme page 'favoris'
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>Favoris</Text>
+    </View>
+  );
+}
+
+const Tabs = createBottomTabNavigator(); //Cree la navigation en bas de l'appli
+
+function MyTabs() {
+  return (
+    <Tabs.Navigator>
+      <Tabs.Screen name="Films" component={HomeScreen} />
+      <Tabs.Screen name="Favoris" component={SettingsScreen} />
+    </Tabs.Navigator>
+  );
+}
+
+
+const HelloWorldApp = () => {
+  return (
+    <NavigationContainer>
+      <MyTabs />
+    </NavigationContainer>
+  );
+};
+
+const styles = StyleSheet.create({ 
   container: {
     flex: 1,
     paddingTop: 10,

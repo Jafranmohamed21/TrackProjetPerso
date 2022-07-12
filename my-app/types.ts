@@ -1,6 +1,10 @@
-export type GhibliApi = {
-    data: Object;
-    title : Array<string>
+type FilmApi = {
+    description: string,
+    title: string,
+    id: string
 }
 
-//export type GhibliJafran = Array<{string}>
+export type GhibliApi = Array<FilmApi>;
+
+
+export type GhibliJafran = Array<string>
