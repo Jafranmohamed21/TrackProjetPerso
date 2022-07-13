@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, ScrollView, Text, View, Image, ActivityIndicator } from 'react-native';
+import { useAtom } from 'jotai';
+import { StyleSheet, ScrollView, Text, View, Image, TouchableOpacity } from 'react-native';
 import getMovieData from './fetchMovieData';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
@@ -15,6 +16,10 @@ const HomeScreen = () => {
       setData(result);
     })()
   },[]);
+  
+  
+  const [touch, setTouch] = useState(1)
+  console.log(touch);
 
   const starImgCorner = 'https://raw.githubusercontent.com/tranhonghan/images/main/star_corner.png';
   const starImgFilled = 'https://raw.githubusercontent.com/tranhonghan/images/main/star_filled.png'
@@ -25,21 +30,33 @@ const HomeScreen = () => {
         return (
           <View >
             <View style={styles.container}>
-            <Text style={styles.title}>{movie.title}</Text>
-            <Image
-              resizeMode= 'contain'
-              style={styles.icon}
-              source={{uri: starImgCorner}}
-            />
+              <Text style={styles.title}>{movie.title}</Text>
+              <View>
+                <TouchableOpacity
+                  activeOpacity={0.7}
+                  onPress = {() => {
+                    if (!touch) {
+                      setTouch(1);
+                    }
+                    else {
+                      setTouch(0)
+                    } }} 
+                  >
+                  <Image
+                    style={styles.icon}
+                    source= {touch ? {uri: starImgCorner} : {uri: starImgFilled}}
+                    />
+                </TouchableOpacity>
+              </View>
             </View> 
-          <View>    
-          <Text style={styles.desc}>{movie.description}</Text>
-          <Image
-            resizeMode= 'contain'
-            style={styles.image}
-            source={{uri: movie.image}}
-          />
-          </View>  
+            <View>    
+              <Text style={styles.desc}>{movie.description}</Text>
+              <Image
+                resizeMode= 'contain'
+                style={styles.image}
+                source={{uri: movie.image}}
+              />
+            </View>  
           </View>
         )
         })}      
@@ -84,7 +101,7 @@ const styles = StyleSheet.create({
   icon: {
     height: 30,
     width: 30,
-    alignSelf: 'center'
+    resizeMode: 'cover',
   },
   image: {
     height: 300,
